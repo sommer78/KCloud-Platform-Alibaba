@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.laokou</groupId>
+    <artifactId>KCloud-Platform-Alibaba</artifactId>
+    <version>3.1.1</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>laokou-common</module>
+        <module>laokou-cloud</module>
+        <module>laokou-service</module>
+    </modules>
+    <name>KCloud-Platform-Alibaba</name>
+    <description>一款企业级微服务架构的云服务多租户SaaS平台</description>
+    <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
+    <properties>
+        <laokou.version>3.1.1</laokou.version>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <!--spring-boot版本-->
+        <spring-boot.version>3.1.1</spring-boot.version>
+        <!--spring-cloud版本-->
+        <spring-cloud.version>2022.0.3</spring-cloud.version>
+        <!--spring-framework版本-->
+        <spring-framework.version>6.0.9</spring-framework.version>
+        <!--cloud-alibaba版本-->
+        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
+        <!--spring-doc版本-->
+        <spring-doc.version>2.1.0</spring-doc.version>
+        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
+        <docker.registry.name>koushenhai</docker.registry.name>
+        <docker.version>1.2.2</docker.version>
+        <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+        <spring-javaformat-maven-plugin.version>0.0.35</spring-javaformat-maven-plugin.version>
+        <maven-checkstyle-plugin.failsOnError>true</maven-checkstyle-plugin.failsOnError>
+        <maven-checkstyle-plugin.failsOnViolation>true</maven-checkstyle-plugin.failsOnViolation>
+        <maven-checkstyle-plugin.includeTestSourceDirectory>true</maven-checkstyle-plugin.includeTestSourceDirectory>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!-- 定义公共版本 -->
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-bom</artifactId>
+                <version>${laokou.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义 spring boot 版本 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义 spring cloud 版本 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义 spring cloud alibaba 版本 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义spring framework 版本 -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义 spring doc 版本 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi</artifactId>
+                <version>${spring-doc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>snapshots-repo</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-release</id>
+            <name>Spring release</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshot</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>ossrh</id>
+            <name>OSS Snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-release</id>
+            <name>Spring release</name>
+            <url>https://repo.spring.io/release</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestone</id>
+            <name>Spring milestone</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>snapshots-repo</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <MYSQL-USERNAME>root</MYSQL-USERNAME>
+                <MYSQL-PASSWORD>laokou123</MYSQL-PASSWORD>
+                <MYSQL-HOST>127.0.0.1</MYSQL-HOST>
+                <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
+                <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
+                <MYSQL-PORT>3306</MYSQL-PORT>
+                <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
+                <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
+                <NACOS-USERNAME>nacos</NACOS-USERNAME>
+                <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
+                <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
+                <SEATA-USERNAME>seata</SEATA-USERNAME>
+                <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+                <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
+                <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
+                <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
+                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
+                <MAIL-USERNAME>xxx</MAIL-USERNAME>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <MYSQL-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</MYSQL-USERNAME>
+                <MYSQL-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</MYSQL-PASSWORD>
+                <MYSQL-HOST>laokou.org</MYSQL-HOST>
+                <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
+                <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
+                <MYSQL-PORT>3306</MYSQL-PORT>
+                <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
+                <NACOS-DISCOVERY-ADDRESS>https://127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>https://127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
+                <NACOS-USERNAME>nacos</NACOS-USERNAME>
+                <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
+                <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
+                <SEATA-USERNAME>seata</SEATA-USERNAME>
+                <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+                <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
+                <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
+                <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
+                <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
+                <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
+            </properties>
+        </profile>
+        <!-- 正式环境 -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-USERNAME>${MYSQL-USERNAME:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</MYSQL-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-PASSWORD>${MYSQL-PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</MYSQL-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-HOST>${MYSQL-HOST:laokou.org}</MYSQL-HOST>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-DB-NACOS>${MYSQL-DB-NACOS:kcloud_platform_nacos}</MYSQL-DB-NACOS>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-DB-SEATA>${MYSQL-DB-SEATA:kcloud_platform_seata}</MYSQL-DB-SEATA>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-DB-XXL-JOB>${MYSQL-DB-XXL-JOB:kcloud_platform_xxl_job}</MYSQL-DB-XXL-JOB>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-DB-POWER-JOB>${MYSQL-DB-POWER-JOB:kcloud_platform_alibaba_power_job}</MYSQL-DB-POWER-JOB>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-PORT>${MYSQL-PORT:3306}</MYSQL-PORT>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-NAMESPACE>${NACOS-NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:https://127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:https://127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-GROUP>${NACOS-GROUP:LAOKOU_GROUP}</NACOS-GROUP>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-USERNAME>${NACOS-USERNAME:nacos}</NACOS-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-PASSWORD>${NACOS-PASSWORD:nacos}</NACOS-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <SEATA-GROUP>${SEATA-GROUP:SEATA_GROUP}</SEATA-GROUP>
+                <!--suppress UnresolvedMavenProperty -->
+                <SEATA-USERNAME>${SEATA-USERNAME:seata}</SEATA-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <SEATA-PASSWORD>${SEATA-PASSWORD:seata}</SEATA-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <SENTINEL-USERNAME>${SENTINEL-USERNAME:sentinel}</SENTINEL-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <SENTINEL-PASSWORD>${SENTINEL-PASSWORD:sentinel}</SENTINEL-PASSWORD>
+                <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
+                <!--suppress UnresolvedMavenProperty -->
+                <MAIL-PASSWORD>${MAIL-PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <MAIL-USERNAME>${MAIL-USERNAME:2413176044@qq.com}</MAIL-USERNAME>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <version>${spring-javaformat-maven-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-Xlint:deprecation</arg>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.version}</version>
+                <configuration>
+                    <!-- 推送至阿里云Docker仓库 -->
+                    <serverId>docker-aliyun</serverId>
+                    <registryUrl>${docker.repostory}</registryUrl>
+                    <pushImage>true</pushImage>
+                    <!-- 指定生成的镜像名 推送阿里云镜像仓库用 -->
+                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+                    <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
+                    <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+                    <dockerHost>http://192.168.62.137:2375</dockerHost>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.artifactId}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+        <!-- profile对资源的操作 -->
+        <resources>
+            <!-- 打包的时候先去掉所有的配置文件 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>application*.yml</exclude>
+                    <exclude>bootstrap*.yml</exclude>
+                </excludes>
+            </resource>
+            <!-- 添加需要包含的文件 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 是否替换yml或者properties里@xx@表示的maven properties属性值 -->
+                <filtering>true</filtering>
+                <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
+                <includes>
+                    <include>application.yml</include>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <include>application-${profile.active}.yml</include>
+                    <include>bootstrap.yml</include>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <include>bootstrap-${profile.active}.yml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+</project>
